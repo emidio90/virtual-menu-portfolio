@@ -1,0 +1,7 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Images are private; Express validates ownership and streams image bytes.
+    match /{path=**} { allow read, write: if false; }
+  }
+}

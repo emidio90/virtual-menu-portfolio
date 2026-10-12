@@ -1,0 +1,8 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // All app reads/writes go through verified, owner-scoped Express routes.
+    // Profiles, roles, balances, orders, jobs and payment markers are never client-writable.
+    match /{document=**} { allow read, write: if false; }
+  }
+}
