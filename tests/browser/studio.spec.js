@@ -24,7 +24,9 @@ test('recruiter journey is isolated, responsive and accurately labeled', async (
   await page.getByLabel('Dish names & descriptions').fill('Garden bowl — Grains and greens\nPasta special — Basil and tomato');
   await page.getByRole('button', { name: 'Create shot list', exact: true }).click();
   await expect(page.locator('.dish-card')).toHaveCount(5);
-  await page.getByRole('radio', { name: 'Rustic / Dark' }).check();
+  const rusticStyle = page.getByRole('radio', { name: 'Rustic / Dark' });
+  await page.locator('label.style-option').filter({ has: rusticStyle }).click();
+  await expect(rusticStyle).toBeChecked();
   await page.getByRole('radio', { name: '2K' }).check();
   const card = page.locator('.dish-card').filter({ has: page.getByRole('heading', { name: 'Garden bowl', exact: true }) });
   await card.getByRole('button', { name: /Create preview/ }).click();
