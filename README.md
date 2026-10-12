@@ -24,7 +24,7 @@ Open `http://127.0.0.1:8080`. The Express server rejects all provider/payment en
 
 ## Optional free static hosting
 
-The isolated demo can use Firebase Hosting on Spark within its limits, without enabling Functions, Storage, APIs or billing. A separate hosting-only configuration forces a demo build. See [the owner-run static hosting guide](docs/STATIC_HOSTING.md). No deployment has been made.
+The [published isolated demo](https://virtual-menu-portfolio.web.app) uses Firebase Hosting on Spark within its limits, with billing disabled. A hosting-only configuration forces a demo build. Pushes to `main` are rebuilt and deployed by GitHub Actions only after all checks pass; the keyless identity link is limited to this repository and workflow. See [the static hosting and CI/CD guide](docs/STATIC_HOSTING.md).
 
 ## The product
 
@@ -73,7 +73,7 @@ npm run test:browser          # Desktop + mobile demo journeys
 npm run test:rules            # Firestore/Storage emulator checks; Java 21 required
 ```
 
-The rules command uses the explicit fake project `demo-virtual-menu`. It refuses to run without emulator host variables. Provider adapters are mocked in tests; no API credentials or payment accounts are required. CI is configured to repeat these checks. Local browser execution was blocked by the workspace runtime, and developer-tool dependency advisories remain; see the verification record. CI has not run on GitHub until this copy is placed in a repository and its workflow executes.
+The rules command uses the explicit fake project `demo-virtual-menu`. It refuses to run without emulator host variables. Provider adapters are mocked in tests; no API credentials or payment accounts are required. [GitHub Actions](https://github.com/emidio90/virtual-menu-portfolio/actions) repeats these checks, including desktop/mobile browser journeys and emulator tests, before an authorized `main` deployment. Developer-tool dependency advisories remain; see the verification record.
 
 ## Origin and contribution disclosure
 
@@ -83,7 +83,7 @@ The private original repository was read only. Its Git history, deployment confi
 
 ## Scope and limitations
 
-- Local tests demonstrate the included code paths. No live Firebase project, Gemini request, Stripe account, production deployment, or historical credential was used during preparation
+- Tests demonstrate the included code paths using mocks and local emulators. The published Firebase deployment serves only the isolated static demo; live Gemini generation, Firebase app integrations and Stripe payments have not been exercised
 - Generated images may misrepresent the food a restaurant actually serves. Review every output; do not use this tool to infer ingredient, allergy, nutrition or dietary-safety information
 - Live parsing is limited to ten requests per authenticated user per hour and twenty dishes per request. Image jobs require an explicitly allowlisted development account, email verification and simulated/test application credits. Test Stripe payments do not cover real Gemini costs
 - The server uses synchronous provider requests, not a durable worker queue. Recovery, account lifecycle, retention, privacy notices, refunds/disputes and operational abuse protections need additional work before commercial deployment
