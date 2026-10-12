@@ -1,8 +1,8 @@
 # Virtual Menu · Food Image Studio
 
-A full-stack portfolio project that turns restaurant menu text into an editable food-image shot list. Choose an aesthetic and resolution, preview a dish illustration, and manage the generation workflow.
+A full-stack portfolio project that turns restaurant menu text into an editable food-image shot list. Choose an aesthetic and resolution, preview an AI-generated food sample, and manage the generation workflow.
 
-**Try it without an account:** the default mode runs entirely in your browser using synthetic menus, locally authored SVG food illustrations, and simulated credits. It makes no Firebase, Gemini, or Stripe calls. The illustrations are design fixtures, not evidence of AI generation quality.
+**Try it without an account:** the default mode runs entirely in your browser using synthetic menus, nine pre-generated photorealistic AI images created with ChatGPT, and simulated credits. It makes no Firebase, Gemini, Stripe or runtime image-generation calls. The images are bundled samples, not photographs of a real restaurant’s food or outputs from the application’s Gemini integration.
 
 ## Quick start
 
@@ -32,10 +32,10 @@ The [published isolated demo](https://virtual-menu-portfolio.web.app) uses Fireb
 - Parse menu lines into a shot list; edit the source and create another list
 - Choose **Rustic/Dark**, **Bright/Modern**, or **Social Media** aesthetics
 - Select **1K / 2K / 4K** with visible 1 / 2 / 4-credit costs
-- Generate a labeled demo illustration, inspect it in a preview, download it, or delete a card
+- Select a labeled, pre-generated AI food sample, inspect it in a preview, download it as PNG, or delete a card
 - Explore the architecture from the interface
 
-Demo parsing is deterministic, and demo “generation” selects an existing local SVG. It does not infer arbitrary dishes or produce new photography. Real Google Gemini parsing and image generation adapters remain in the server source for a separately configured development project. Resolution settings are requests to that provider; the fixtures are SVGs and have no corresponding raster-generation claim.
+Demo parsing is deterministic, and demo “generation” selects an existing local image. Three dishes each have three distinct styles. Custom menu entries show clearly labeled representative samples, including which sample is shown; arbitrary input is not depicted or generated. The bundled WebP images are 1024 × 1024. PNG exports at 2K / 4K are explicitly labeled upscaled to 2048 / 4096 pixels and do not add native detail. Real Google Gemini parsing and image generation adapters remain in the server source for a separately configured development project.
 
 This is a food-image studio. Public menu hosting, QR menus, restaurant ordering, and delivery-platform integrations are not implemented.
 
@@ -44,7 +44,7 @@ This is a food-image studio. Public menu hosting, QR menus, restaurant ordering,
 | Layer | Implementation |
 | --- | --- |
 | Interface | React 19, TypeScript, Vite, locally bundled CSS |
-| Default demo | Browser-local state, deterministic mock service, original SVG fixtures |
+| Default demo | Browser-local state, deterministic mock service, nine pre-generated ChatGPT image samples |
 | Integration API | One Express 5 backend, Firebase Admin ID-token verification |
 | Accounts and data | Firebase Auth, server-only Firestore transactions |
 | Images | Gemini SDK, private Firebase Storage objects, owner-authorized image streaming |
@@ -92,6 +92,6 @@ The private original repository was read only. Its Git history, deployment confi
 
 ## Assets and license
 
-The bundled food illustrations are self-contained SVGs authored for this portfolio and described in [ASSETS.md](ASSETS.md). No external images, fonts or CDN scripts are required. Do not describe these fixtures as real restaurant photos or actual Gemini outputs.
+The bundled food photographs are photorealistic AI-generated samples created with ChatGPT for this portfolio. All nine were visually reviewed and optimized to WebP under 250 kB each. [ASSETS.md](ASSETS.md) describes provenance, [the asset manifest](docs/PHOTO_ASSETS.json) records dimensions and hashes, and [the prompt set](docs/PHOTO_PROMPTS.json) records each image request. No externally hosted images, fonts or CDN scripts are required. Do not describe these samples as real restaurant photos or actual Gemini outputs.
 
 **UNLICENSED.** No open-source license was verified in the source project. The owner must select a license and confirm rights before public reuse/publication. Third-party dependency licenses remain applicable. No fabricated corporate terms or privacy policy are supplied.

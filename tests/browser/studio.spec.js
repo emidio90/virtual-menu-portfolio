@@ -1,4 +1,15 @@
 import { test, expect } from '@playwright/test';
+import { readFile } from 'node:fs/promises';
+
+async function expectPngDownload(download,edge){
+  expect(download.suggestedFilename()).toContain('ai-sample');
+  const bytes=await readFile(await download.path());
+  expect(bytes.subarray(0,8).toString('hex')).toBe('89504e470d0a1a0a');
+  expect(bytes.readUInt32BE(16)).toBe(edge);
+  expect(bytes.readUInt32BE(20)).toBe(edge);
+  if(edge>1024)expect(download.suggestedFilename()).toContain('upscaled');
+}
+
 
 test('recruiter journey is isolated, responsive and accurately labeled', async ({ page }, info) => {
   const external = [], errors = [];
@@ -6,19 +17,25 @@ test('recruiter journey is isolated, responsive and accurately labeled', async (
   page.on('pageerror', error => errors.push(error.message));
   await page.goto('/');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Good food.');
-  await expect(page.getByText('Self-authored SVG illustrations · Not Gemini outputs')).toBeVisible();
+  await expect(page.getByText('AI-generated with ChatGPT · Pre-generated samples')).toBeVisible();
   await page.screenshot({ path: `docs/screenshots/${info.project.name}-landing.png`, fullPage: true });
   await page.getByRole('button', { name: 'Explore the studio', exact: true }).click();
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Menu, meet your close-up');
   await expect(page.locator('.dish-card')).toHaveCount(3);
   await expect(page.locator('.credits-button')).toContainText('12');
+  const images=page.locator('.dish-card .image-preview-button img');
+  for(const img of await images.all()){
+    await img.scrollIntoViewIfNeeded();
+    await expect(img).toHaveAttribute('src',/\/fixtures\/.+-modern\.webp$/);
+    await expect.poll(()=>img.evaluate(el=>el.naturalWidth)).toBe(1024);
+  }
   await page.screenshot({ path: `docs/screenshots/${info.project.name}-studio.png`, fullPage: true });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBeTruthy();
   await page.getByRole('button', { name: 'Preview Lemon & herb pasta', exact: true }).click();
   await expect(page.getByRole('dialog')).toBeVisible();
   const download = page.waitForEvent('download');
   await page.getByRole('button', { name: 'Download PNG', exact: true }).click();
-  expect((await download).suggestedFilename()).toContain('illustrated-demo');
+  await expectPngDownload(await download,1024);
   await page.keyboard.press('Escape');
   await expect(page.getByRole('dialog')).toHaveCount(0);
   await page.getByLabel('Dish names & descriptions').fill('Garden bowl — Grains and greens\nPasta special — Basil and tomato');
@@ -32,7 +49,16 @@ test('recruiter journey is isolated, responsive and accurately labeled', async (
   await card.getByRole('button', { name: /Create preview/ }).click();
   await expect(card.getByRole('button', { name: 'Preview Garden bowl', exact: true })).toBeVisible();
   await expect(page.locator('.credits-button')).toContainText('10');
-  await expect(card).toContainText('2K');
+  await expect(card).toContainText('2K EXPORT');
+  await expect(card).toContainText('REPRESENTATIVE SAMPLE');
+  await expect(card).toContainText('Sample shown: Roasted harvest bowl');
+  await expect(card.locator('img')).toHaveAttribute('src','/fixtures/bowl-rustic.webp');
+  await card.getByRole('button',{name:'Preview Garden bowl',exact:true}).click();
+  await expect(page.getByRole('dialog')).toContainText('upscaled from 1024 × 1024');
+  const largeDownload=page.waitForEvent('download');
+  await page.getByRole('button',{name:'Download PNG',exact:true}).click();
+  await expectPngDownload(await largeDownload,2048);
+  await page.keyboard.press('Escape');
   await page.getByRole('button', { name: 'Delete Garden bowl', exact: true }).click();
   await page.getByRole('button', { name: 'Keep dish', exact: true }).click();
   await expect(page.locator('.dish-card')).toHaveCount(5);
@@ -54,7 +80,7 @@ test('recruiter journey is isolated, responsive and accurately labeled', async (
 test('modals close cleanly, demo checkout is unavailable, refresh resets session', async ({ page }) => {
   await page.goto('/#studio');
   await page.getByRole('button', { name: 'Demo guide', exact: true }).click();
-  await expect(page.getByRole('dialog')).toContainText('not Gemini outputs');
+  await expect(page.getByRole('dialog')).toContainText('ChatGPT, not Gemini');
   await page.getByRole('button', { name: 'Close dialog' }).click();
   await expect(page.getByRole('dialog')).toHaveCount(0);
   await page.locator('.credits-button').click();
@@ -63,6 +89,23 @@ test('modals close cleanly, demo checkout is unavailable, refresh resets session
   await page.getByRole('radio', { name: '4K' }).check();
   await page.locator('.dish-card').first().getByRole('button', { name: /Recreate/ }).click();
   await expect(page.locator('.credits-button')).toContainText('8');
+  await page.locator('.dish-card').first().getByRole('button',{name:/^Preview /}).click();
+  await expect(page.getByRole('dialog')).toContainText('4096 × 4096 PNG export, upscaled');
+  const largeDownload=page.waitForEvent('download');
+  await page.getByRole('button',{name:'Download PNG',exact:true}).click();
+  await expectPngDownload(await largeDownload,4096);
+  await page.keyboard.press('Escape');
+  const socialStyle=page.getByRole('radio',{name:'Social Media'});
+  await page.locator('label.style-option').filter({has:socialStyle}).click();
+  await page.getByRole('radio',{name:'1K'}).check();
+  await page.getByLabel('Dish names & descriptions').fill('Pizza margherita — Tomato and mozzarella');
+  await page.getByRole('button',{name:'Create shot list',exact:true}).click();
+  const custom=page.locator('.dish-card').filter({has:page.getByRole('heading',{name:'Pizza margherita',exact:true})});
+  await custom.getByRole('button',{name:/Create preview/}).click();
+  await expect(custom).toContainText('REPRESENTATIVE SAMPLE');
+  await expect(custom).toContainText('Sample shown: Lemon & herb pasta');
+  await expect(custom.locator('img')).toHaveAttribute('src','/fixtures/pasta-social.webp');
+  await expect(custom.locator('img')).toHaveAttribute('alt',/not a depiction of Pizza margherita/);
   await page.reload();
   await expect(page.locator('.credits-button')).toContainText('12');
   const response = await page.request.post('/api/checkout', { data: { packageId: 'starter' } });

@@ -1,6 +1,17 @@
 # Verification record
 
-Prepared on 2026-10-12 with Node.js 24.19.0 and npm 11.9.0 in an isolated cloud workspace. The original repository was not changed, published or connected to live services.
+Prepared on 2026-10-12 with Node.js 24.19.0 and npm 11.9.0 in an isolated cloud workspace. The private original repository remains unchanged. The separate portfolio repository and isolated static demo were subsequently published; live application integrations remain disabled.
+
+## Photographic sample update
+
+- All nine ChatGPT-generated source images were visually reviewed, and the optimized 1024 × 1024 WebP copies were verified against their hashes, dimensions and 250 kB per-image limit
+- `npm run check`: production build, strict TypeScript checking, **198 tests** and release scan passed
+- `VITE_APP_MODE=live npm run build:demo`: forced-demo build and integration-isolation scan passed
+- Firestore/Storage emulator suite: **8 tests passed** on the updated source
+- Four desktop/mobile browser scenarios now check photographic asset loading, representative labels for custom dishes, distinct styles, and actual 1024 / 2048 / 4096 PNG export dimensions
+- Local browser execution remains blocked before any application assertions by the runtime’s denied Chromium process-singleton socket. Browser assertions for this photo revision require the GitHub Actions run; a successful local browser pass is not claimed
+
+The checks below also document the original security refactor. Dependency versions and server integration code were not changed for the photographic update.
 
 ## Passed
 
@@ -17,13 +28,13 @@ Tests use synthetic identities, in-memory fixtures, mocked provider responses an
 
 The emulator tests required a temporary writable HOME and XDG_CONFIG_HOME in this managed workspace. The complete rerun exited zero. Ordinary developer machines and the included Java 21 CI job should not need that workspace-specific adjustment.
 
-## Browser execution blocked, not passed
+## Browser verification boundaries
 
 Four Playwright scenario/project combinations are included for desktop/mobile: the main demo journey, parsing, style/resolution choices, credit changes, preview/download, cancellation/deletion/reset, modal dismissal, browser navigation, offline isolation and session reset.
 
 The local system Chromium process was unable to start because this environment denied its process-singleton socket. A supported permission retry with a temporary profile encountered the same runtime restriction. The failure occurred before any application assertions. **No local visual review, successful browser scenario or screenshot is claimed.** Do not treat a passing build as browser validation.
 
-The GitHub workflow is supplied but has not run for this history-free copy. Its browser checks must pass in a supported runtime after an independently approved repository push. No GitHub push or hosting deployment was performed here.
+The baseline portfolio passed its GitHub browser suite before this photo revision. The updated photo assertions must pass again for the exact new commit. The current workflow checks unit/API tests, emulators and desktop/mobile browser journeys before deploying the forced-demo artifact to Firebase Hosting; see [CI/CD setup](STATIC_HOSTING.md).
 
 ## Dependency caveat
 
@@ -36,7 +47,7 @@ The production graph's grpc dependency is explicitly overridden to patched `@grp
 - Real Firebase Auth, Firestore or Storage project smoke tests
 - Real Gemini menu parsing, image generation, quotas, models, cost or quality checks
 - Real Stripe account/webhook delivery or even test-card checkout against Stripe servers
-- Production deployment, load testing, accessibility audit, credential-history scan or penetration testing
+- Live application deployment, load testing, accessibility audit, credential-history scan or penetration testing. Static demo publication is separate and does not validate live services
 - Legal/commercial review, customer data migration, account deletion or storage retention implementation
 
 ## Review-driven changes

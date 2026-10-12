@@ -1,0 +1,161 @@
+{
+  "created": "2026-10-12",
+  "generator": "ChatGPT image generation",
+  "runtimeGeneration": false,
+  "processing": "Original RGB PNG images were visually inspected, resized to 1024 square with Lanczos, and compressed as WebP. No generative post-processing.",
+  "images": [
+    {
+      "key": "bowl-modern",
+      "file": "public/fixtures/bowl-modern.webp",
+      "format": "WebP",
+      "width": 1024,
+      "height": 1024,
+      "bytes": 211178,
+      "quality": 86,
+      "sha256": "9edf7d4ba2ebdf596c0e11a4a873656d900a4bf40ac69715edec341dfb82e149",
+      "original": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bytes": 2697985,
+        "sha256": "9b521dff22ab298d89ff094f207605369237e4c7c19f77cd1f717000a7a244b7"
+      }
+    },
+    {
+      "key": "bowl-rustic",
+      "file": "public/fixtures/bowl-rustic.webp",
+      "format": "WebP",
+      "width": 1024,
+      "height": 1024,
+      "bytes": 247712,
+      "quality": 84,
+      "sha256": "35f34c746d83066ccf0da7087275d52fc559776b0f4ffcfb1f8a267da6056570",
+      "original": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bytes": 2987828,
+        "sha256": "1ec2b9bb0d75dacaa7ad0be191e5d17e7922c8287d6a7e1f9468585a945ffd74"
+      }
+    },
+    {
+      "key": "bowl-social",
+      "file": "public/fixtures/bowl-social.webp",
+      "format": "WebP",
+      "width": 1024,
+      "height": 1024,
+      "bytes": 232302,
+      "quality": 86,
+      "sha256": "827bf1a82b29e0ac8dc735bcf9df497a18a6a6e2fefc758f11769e2680b4b75d",
+      "original": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bytes": 2768493,
+        "sha256": "e7d0714606b692fcbfba12ff57e5e57e3d8b3dc06f90bb2e0626803adb4fd9d9"
+      }
+    },
+    {
+      "key": "pasta-modern",
+      "file": "public/fixtures/pasta-modern.webp",
+      "format": "WebP",
+      "width": 1024,
+      "height": 1024,
+      "bytes": 176228,
+      "quality": 86,
+      "sha256": "af4d1ba53f0bb7ee034e708253e266ec0ed70cd77ef55dff8863e37eee1f0ee6",
+      "original": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bytes": 2495446,
+        "sha256": "f7fcf733df1d33b596ad79e7082416283ae1694e8b16e035e0d3361c8a62f34d"
+      }
+    },
+    {
+      "key": "pasta-rustic",
+      "file": "public/fixtures/pasta-rustic.webp",
+      "format": "WebP",
+      "width": 1024,
+      "height": 1024,
+      "bytes": 212392,
+      "quality": 86,
+      "sha256": "6b788db0544a49cf9542444970984bdd937be43124c9b2de494ce9783b2f76eb",
+      "original": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bytes": 2695193,
+        "sha256": "0b59345e2f3dd7217aca856fcd80404d966361aa6d0bdb438273879b4bead172"
+      }
+    },
+    {
+      "key": "pasta-social",
+      "file": "public/fixtures/pasta-social.webp",
+      "format": "WebP",
+      "width": 1024,
+      "height": 1024,
+      "bytes": 224108,
+      "quality": 86,
+      "sha256": "6a1d37ebebfa4867977a7af0090f98845b2eab2ce928dea6e552d650b431bb6e",
+      "original": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bytes": 2751262,
+        "sha256": "1ef349cb9224675e1e49b8d30bc5b87ce7e691b28f517ebc660d97bd7edbc04c"
+      }
+    },
+    {
+      "key": "salmon-modern",
+      "file": "public/fixtures/salmon-modern.webp",
+      "format": "WebP",
+      "width": 1024,
+      "height": 1024,
+      "bytes": 207656,
+      "quality": 86,
+      "sha256": "869bf0c19042f7360aa7e237553a5e11896fda5a604ff3bfae75e85c3004e8c6",
+      "original": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bytes": 2646320,
+        "sha256": "31f2f2f60bd01bdc4135ab2ebcdcb6c4dab3afffe0b424f3310274c58c4301af"
+      }
+    },
+    {
+      "key": "salmon-rustic",
+      "file": "public/fixtures/salmon-rustic.webp",
+      "format": "WebP",
+      "width": 1024,
+      "height": 1024,
+      "bytes": 235674,
+      "quality": 86,
+      "sha256": "1ddefaf582441d31a223bd3722f4ccf6b3889db2bfda48d77867cc6e65527a02",
+      "original": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bytes": 2728078,
+        "sha256": "4becf01a4abe18644eb5d140d52270ffabffdd94e1d7f74e019da464127f5371"
+      }
+    },
+    {
+      "key": "salmon-social",
+      "file": "public/fixtures/salmon-social.webp",
+      "format": "WebP",
+      "width": 1024,
+      "height": 1024,
+      "bytes": 235438,
+      "quality": 86,
+      "sha256": "7e50c7c3815daa0e8068e2a8d7f78ec526dc6e214db513c8573d1eb72c3d594b",
+      "original": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bytes": 2813231,
+        "sha256": "2ca77395880d9b577e91cda815c257b812455fe90c20d635bbad2ab19b1b7148"
+      }
+    }
+  ]
+}
